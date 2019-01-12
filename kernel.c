@@ -14,10 +14,12 @@ void register_process(void (*fp)(void))
 	static int p_count = 0;
 	
 	// create new process, register function pointer
-	ctxt_t proc = { .registers = {0},
-					.sp = 0,
-					.pc = 0,
-					.fp = fp};
+	ctxt_t proc = {
+		.registers = {0},
+		.sp = 0,
+		.pc = 0,
+		.fp = fp
+	};
 	
 	// add process to process list
 	process_list[p_count++] = proc;
