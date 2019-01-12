@@ -6,7 +6,7 @@
 
 void f1()
 {
-	DDRB |= 0x03;
+	DDRB |= 0x01;
 
 	while (1) {
 		PORTB ^= 0x01;
