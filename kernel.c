@@ -7,10 +7,10 @@ void switch_context();
 
 static ctxt_t process_list[10];
 static int p_count = 0;
-char *proc_registers;
-uint16_t *proc_sp;
-uint16_t *proc_pc;
-uint8_t *proc_sreg;
+volatile char *proc_registers;
+volatile uint16_t *proc_sp;
+volatile uint16_t *proc_pc;
+volatile uint8_t *proc_sreg;
 
 void switch_context()
 {
