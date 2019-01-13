@@ -4,10 +4,10 @@ CFLAGS += -mmcu=atmega1284
 
 .PHONY: all clean flash
 
-all: main.hex
+all: clean main.hex
 
 debug: CFLAGS += -DDEBUG
-debug: main.hex
+debug: clean main.hex
 
 main: main.c kernel.c kernel_utils.S
 
