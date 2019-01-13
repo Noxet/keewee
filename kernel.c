@@ -25,10 +25,10 @@ void switch_context()
 	proc_sp = &process_list[process_nbr].sp;
 	proc_sreg = &process_list[process_nbr].sreg;
 	
-	if (process_list[process_nbr].state == 0) {
+	if (process_list[process_nbr].state == READY) {
 		// enable interrupts (we are inside an interrupt that runs cli)
 		// call function, never to return again
-		process_list[process_nbr].state = 1;
+		process_list[process_nbr].state = RUNNING;
 		sei();
 		process_list[process_nbr].fp();
 	} else {
@@ -42,7 +42,7 @@ void register_process(void (*fp)(void))
 {
 	// create new process, register function pointer
 	ctxt_t proc = {
-		.state = 0,
+		.state = READY,
 		.registers = {0},
 		.sp = STACK_TOP - p_count * STACK_SPACE,
 		.pc = 0,

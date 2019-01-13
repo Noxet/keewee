@@ -11,7 +11,7 @@
 typedef enum {READY, RUNNING} STATE;
 
 typedef struct __attribute__((packed)) {
-	uint8_t state;
+	STATE state;
 	char registers[32];
 	uint16_t sp;
 	uint16_t pc;
