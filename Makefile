@@ -6,6 +6,9 @@ CFLAGS += -mmcu=atmega1284
 
 all: main.hex
 
+debug: CFLAGS += -DDEBUG
+debug: main.hex
+
 main: main.c kernel.c kernel_utils.S
 
 main.hex: main

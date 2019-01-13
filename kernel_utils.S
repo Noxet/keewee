@@ -6,12 +6,18 @@
 
 .extern switch_context	; C function
 
-;.global TIMER1_OVF_vect
+#ifdef DEBUG
 .global PCINT0_vect
+#else
+.global TIMER1_OVF_vect
+#endif
 .global restore_process_state
 
-;TIMER1_OVF_vect:
-	PCINT0_vect:
+#ifdef DEBUG
+PCINT0_vect:
+#else
+TIMER1_OVF_vect:
+#endif
 	; save all registers
 	push ZL
 	push ZH
@@ -170,6 +176,6 @@ restore_process_state:
 	pop r30
 	pop r31					; restore Z register
 	
-	sei						; re-enable interrupts
-	ret						; jump to the pushed PC value
+;	sei						; re-enable interrupts
+	reti					; jump to the pushed PC value, and enable interrupts
 							; this is the current PC of the process to be run

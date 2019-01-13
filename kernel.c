@@ -62,19 +62,22 @@ void kernel_start()
 	// enable interrupts
 	sei();
 	
-	// set up timer
-	//TIMSK1 |= _BV(TOIE1);
-	
-	// debug, use button to trig interrupt
-	PCICR |= _BV(PCIE0);
-	PCMSK0 |= _BV(PCINT2);
-	
-	
+	// set up global pointers to the first process struct
 	proc_registers = process_list[0].registers;
 	proc_pc = &process_list[0].pc;
 	proc_sp = &process_list[0].sp;
 	proc_sreg = &process_list[0].sreg;
-	process_list[0].state = 1;
-	//TCCR1B |= _BV(CS10);	// prescaling of 1, 4ms process time, also start timer
+	process_list[0].state = RUNNING;
+
+#ifdef DEBUG
+	// debug, use button to trig interrupt
+	PCICR |= _BV(PCIE0);
+	PCMSK0 |= _BV(PCINT2);
+#else
+	// set up timer, presc = 1, 4ms period
+	TIMSK1 |= _BV(TOIE1);	
+	TCCR1B |= _BV(CS10);	// start timer
+#endif
+
 	process_list[0].fp();	// run first process
 }
