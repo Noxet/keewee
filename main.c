@@ -30,7 +30,7 @@ int main(void)
 	register_process(f1);
 	register_process(f2);
 	kernel_start();
-	
+
     while (1);
 }
 

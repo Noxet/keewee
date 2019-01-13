@@ -89,7 +89,7 @@ TIMER1_OVF_vect:
 	ld YH, Z					; load value of pointer, i.e., address of proc_pc
 	st Y+, XL
 	st Y, XH					; store PC in proc_pc
-	
+
 	; save SREG
 	in XL, _SFR_IO_ADDR(SREG)	; load SREG value (1 byte)
 	ldi ZL, lo8(proc_sreg)
@@ -175,7 +175,7 @@ restore_process_state:
 	ld r29, Z+
 	pop r30
 	pop r31					; restore Z register
-	
+
 ;	sei						; re-enable interrupts
 	reti					; jump to the pushed PC value, and enable interrupts
 							; this is the current PC of the process to be run

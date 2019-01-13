@@ -15,16 +15,16 @@ volatile uint8_t *proc_sreg;
 void switch_context()
 {
 	static uint8_t process_nbr = 0;
-	
+
 	PORTB ^= 0x80;
-	
+
 	// get the next process struct
 	process_nbr = (process_nbr + 1) %  p_count;
 	proc_registers = process_list[process_nbr].registers;
 	proc_pc = &process_list[process_nbr].pc;
 	proc_sp = &process_list[process_nbr].sp;
 	proc_sreg = &process_list[process_nbr].sreg;
-	
+
 	if (process_list[process_nbr].state == READY) {
 		// enable interrupts (we are inside an interrupt that runs cli)
 		// call function, never to return again
@@ -49,7 +49,7 @@ void register_process(void (*fp)(void))
 		.sreg = 0,
 		.fp = fp
 	};
-	
+
 	// add process to process list
 	process_list[p_count++] = proc;
 }
@@ -58,10 +58,10 @@ void kernel_start()
 {
 	// set up LED for debug
 	DDRB |= 0x80;
-	
+
 	// enable interrupts
 	sei();
-	
+
 	// set up global pointers to the first process struct
 	proc_registers = process_list[0].registers;
 	proc_pc = &process_list[0].pc;
@@ -75,7 +75,7 @@ void kernel_start()
 	PCMSK0 |= _BV(PCINT2);
 #else
 	// set up timer, presc = 1, 4ms period
-	TIMSK1 |= _BV(TOIE1);	
+	TIMSK1 |= _BV(TOIE1);
 	TCCR1B |= _BV(CS10);	// start timer
 #endif
 
